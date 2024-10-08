@@ -2,7 +2,6 @@ package api.requests.checked;
 
 import api.enums.Endpoint;
 import api.models.BaseModel;
-import api.requests.unchecked.UncheckedBase;
 import io.restassured.specification.RequestSpecification;
 
 import java.util.Arrays;
