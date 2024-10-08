@@ -1,46 +1,37 @@
 package api;
 
-import api.enums.Endpoint;
 import api.models.BuildType;
 import api.models.Project;
 import api.models.User;
-import api.requests.checked.CheckedBase;
+import api.requests.checked.CheckedRequests;
 import api.spec.Specifications;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.List;
 
+import static api.enums.Endpoint.*;
 import static api.generators.TestDataGenerator.generate;
-import static io.qameta.allure.Allure.step;
 
 public class BuildTypeTests extends BaseTest {
     @Test(description = "User should be able to create build type")
     public void verifyUserIsAbleToCreateBuildType() {
         User user = generate(User.class);
+
+        superUserCheckedRequests.getRequest(USERS).create(user);
+        CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(user));
+
         Project project = generate(Project.class);
-        BuildType buildType = generate(BuildType.class);
-        AtomicReference<String> projectId = new AtomicReference<>("");
-        AtomicReference<String> buildTypeId = new AtomicReference<>("");
 
-        step("Create user", () -> {
-            CheckedBase<User> requester = new CheckedBase<>(Specifications.superUserSpec(), Endpoint.USERS);
-            requester.create(user);
-        });
-        step("Create project as a user", () -> {
-            CheckedBase<Project> requester = new CheckedBase<>(Specifications.authSpec(user), Endpoint.PROJECTS);
-            projectId.set(requester.create(project).getId());
-        });
+        project = userCheckedRequests.<Project>getRequest(PROJECTS).create(project);
 
-        CheckedBase<BuildType> requester = new CheckedBase<>(Specifications.authSpec(user), Endpoint.BUILD_TYPES);
-        buildType.setProject(Project.builder().id(projectId.get()).locator(null).build());
+        BuildType buildType = generate(List.of(project), BuildType.class);
 
-        step("Create build type as a user", () -> {
-            buildTypeId.set(requester.create(buildType).getId());
-        });
-        step("Verify buildType is created with correct data", () -> {
-            String createdBuildTypeName = requester.read(buildTypeId.get()).getName();
-            softly.assertEquals(buildType.getName(), createdBuildTypeName, "Incorrect build type name");
-        });
+        userCheckedRequests.getRequest(BUILD_TYPES).create(buildType);
+        String createdBuildTypeName = userCheckedRequests.<BuildType>getRequest(BUILD_TYPES)
+                .read(buildType.getId())
+                .getName();
+
+        softly.assertEquals(buildType.getName(), createdBuildTypeName, "Incorrect build type name");
     }
 
     @Test(description = "User should not be able to create build type with existing id")
