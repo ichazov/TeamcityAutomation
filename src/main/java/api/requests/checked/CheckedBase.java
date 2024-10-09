@@ -1,6 +1,7 @@
 package api.requests.checked;
 
 import api.enums.Endpoint;
+import api.generators.TestDataStorage;
 import api.models.BaseModel;
 import api.requests.CrudOperations;
 import api.requests.Request;
@@ -19,10 +20,13 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
 
     @Override
     public T create(BaseModel model) {
-        return (T) uncheckedBase
+        var m = (T) uncheckedBase
                 .create(model)
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(endpoint.getModelClass());
+
+        TestDataStorage.getInstance().addToStorage(endpoint, m);
+        return m;
     }
 
     @Override
