@@ -1,8 +1,6 @@
 package api;
 
-import api.models.BuildType;
-import api.models.Project;
-import api.models.User;
+import api.models.*;
 import api.requests.checked.CheckedRequests;
 import api.requests.unchecked.UncheckedBase;
 import api.spec.Specifications;
@@ -12,14 +10,16 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static api.enums.Endpoint.*;
+import static api.enums.UserRoles.*;
 import static api.generators.TestDataGenerator.generate;
 
 public class BuildTypeTests extends BaseTest {
+    Roles projectAdminRoles = generate(Roles.class, List.of(PROJECT_ADMIN.getRole()));
+
     @Test(description = "User should be able to create build type")
     public void verifyUserIsAbleToCreateBuildType() {
-        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
-
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         userCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
         userCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
 
@@ -27,18 +27,22 @@ public class BuildTypeTests extends BaseTest {
                 .read(testData.getBuildType().getId())
                 .getName();
 
-        softly.assertEquals(testData.getBuildType().getName(), createdBuildTypeName, "Incorrect build type name");
+        softly.assertEquals(
+                testData.getBuildType().getName(),
+                createdBuildTypeName,
+                "Incorrect build type name"
+        );
     }
 
     @Test(description = "User should not be able to create build type with existing id")
     public void verifyDuplicatedBuildTypeIdIsNotAllowed() {
-        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
+        BuildType buildTypeWithDuplicateId = generate(
+                List.of(testData.getProject()), BuildType.class, testData.getBuildType().getId()
+        );
 
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         userCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
-
-        BuildType buildTypeWithDuplicateId = generate(List.of(testData.getProject()), BuildType.class, testData.getBuildType().getId());
-
         userCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
 
         new UncheckedBase(Specifications.authSpec(testData.getUser()), BUILD_TYPES)
@@ -48,11 +52,43 @@ public class BuildTypeTests extends BaseTest {
 
     @Test(description = "Project admin should be able to create build type for their project")
     public void verifyAdminIsAbleToCreateBuildTypeForTheirProject() {
+        testData.getUser().setRoles(projectAdminRoles);
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
 
+        CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
+
+        userCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
+        userCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
+
+        String createdBuildTypeName = userCheckedRequests.<BuildType>getRequest(BUILD_TYPES)
+                .read(testData.getBuildType().getId())
+                .getName();
+
+        softly.assertEquals(
+                testData.getBuildType().getName(),
+                createdBuildTypeName,
+                "Incorrect build type name"
+        );
     }
 
-    @Test(description = "Project admin should not be able to create build type for another user's project")
-    public void verifyAdminIsNotAbleToCreateBuildTypeForAnotherUsersProject() {
+    @Test(description = "Project admin should be able to create build type for another user's project")
+    public void verifyAdminIsAbleToCreateBuildTypeForAnotherUsersProject() {
+        User projectAdmin = generate(User.class, projectAdminRoles);
+        CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
+        CheckedRequests adminCheckedRequests = new CheckedRequests(Specifications.authSpec(projectAdmin));
 
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
+        superUserCheckedRequests.getRequest(USERS).create(projectAdmin);
+        userCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
+        adminCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
+
+        String createdBuildTypeName = userCheckedRequests.<BuildType>getRequest(BUILD_TYPES)
+                .read(testData.getBuildType().getId())
+                .getName();
+
+        softly.assertEquals(
+                testData.getBuildType().getName(),
+                createdBuildTypeName,
+                "Incorrect build type name");
     }
 }
