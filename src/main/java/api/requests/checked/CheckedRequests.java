@@ -8,13 +8,14 @@ import java.util.Arrays;
 import java.util.EnumMap;
 
 public class CheckedRequests {
-    private final EnumMap<Endpoint, CheckedBase> requests = new EnumMap<>(Endpoint.class);
+    private final EnumMap<Endpoint, CheckedBase<?>> requests = new EnumMap<>(Endpoint.class);
 
     public CheckedRequests(RequestSpecification spec) {
         Arrays.asList(Endpoint.values())
-                .forEach(e -> requests.put(e, new CheckedBase(spec, e)));
+                .forEach(e -> requests.put(e, new CheckedBase<>(spec, e)));
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends BaseModel> CheckedBase<T> getRequest(Endpoint endpoint) {
         return (CheckedBase<T>) requests.get(endpoint);
     }
