@@ -1,9 +1,6 @@
 package api.enums;
 
-import api.models.BaseModel;
-import api.models.BuildType;
-import api.models.Project;
-import api.models.User;
+import api.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +9,8 @@ import lombok.Getter;
 public enum Endpoint {
     BUILD_TYPES("/app/rest/buildTypes", BuildType.class),
     USERS("/app/rest/users", User.class),
-    PROJECTS("/app/rest/projects", Project.class);
+    PROJECTS("/app/rest/projects", Project.class),
+    PROJECTSS("/app/rest/projects", Projects.class);
 
     private final String url;
     private final Class<? extends BaseModel> modelClass;
