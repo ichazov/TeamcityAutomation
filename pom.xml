@@ -18,6 +18,8 @@
         <allure-selenede.version>2.29.0</allure-selenede.version>
         <jackson-core.version>2.18.0</jackson-core.version>
         <jackson-databind.version>2.18.0</jackson-databind.version>
+        <selenide-testng.version>6.19.1</selenide-testng.version>
+        <selenide.version>6.19.1</selenide.version>
     </properties>
 
     <dependencies>
@@ -52,6 +54,17 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide-testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
         </dependency>
     </dependencies>
 

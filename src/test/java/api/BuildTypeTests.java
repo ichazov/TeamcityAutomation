@@ -4,6 +4,7 @@ import api.models.*;
 import api.requests.checked.CheckedRequests;
 import api.requests.unchecked.UncheckedBase;
 import api.spec.Specifications;
+import base.BaseApiTest;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ import static api.enums.Endpoint.*;
 import static api.enums.UserRoles.*;
 import static api.generators.TestDataGenerator.generate;
 
-public class BuildTypeTests extends BaseTest {
+public class BuildTypeTests extends BaseApiTest {
     Roles projectAdminRoles = generate(Roles.class, List.of(PROJECT_ADMIN.getRole()));
 
     @Test(description = "User should be able to create build type")

@@ -1,4 +1,4 @@
-package api;
+package base;
 
 import api.generators.TestDataStorage;
 import api.models.TestData;
@@ -16,13 +16,13 @@ public class BaseTest {
     protected TestData testData;
 
     @BeforeMethod(alwaysRun = true)
-    void setUp() {
+    protected void setUp() {
         softly = new SoftAssert();
         testData = generate();
     }
 
     @AfterMethod(alwaysRun = true)
-    void tearDown() {
+    protected void tearDown() {
         softly.assertAll();
         TestDataStorage.getInstance().clearStorage();
     }
