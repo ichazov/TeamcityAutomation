@@ -1,37 +1,35 @@
 package ui.pages;
 
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import ui.Interactable;
+import ui.elements.BasePageElement;
 
-import java.time.Duration;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selenide.$;
-
-public abstract class BasePage {
+public abstract class BasePage implements Interactable {
     private By rootElement;
 
     protected BasePage(By locator) {
         this.rootElement = locator;
     }
 
-//    protected void setRoot(By locator) {
-//        this.root = locator;
-//    }
-
-//    protected By getRootElement() {
-//        return rootElement;
-//    }
-
-    private SelenideElement getInteractableElement(By locator) {
-        return $(rootElement).$(locator).shouldBe(Condition.interactable, Duration.ofSeconds(15));
-    }
-
     protected void clickElement(By locator) {
-        getInteractableElement(locator).click();
+        getInteractableElement(rootElement, locator).click();
     }
 
     protected void enterText(By locator, String text) {
-        getInteractableElement(locator).val(text);
+        getInteractableElement(rootElement, locator).val(text);
+    }
+
+    @SuppressWarnings("deprecation")
+    protected <T extends BasePageElement> List<T> getPageElements(
+            ElementsCollection elements, Function<SelenideElement, T> mapper) {
+        return elements.stream()
+                .map(mapper)
+                .collect(Collectors.toList());
     }
 }

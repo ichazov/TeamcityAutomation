@@ -1,19 +1,18 @@
 package ui.elements;
 
 import com.codeborne.selenide.SelenideElement;
+import lombok.Getter;
 import org.openqa.selenium.By;
 
-public class ProjectElement extends BasePageElement {
-    private By ROOT = By.id("");
-    private SelenideElement projectName = "";
-    private SelenideElement projectUrl = "";
-    private SelenideElement button = "";
+@Getter
+public class FavoriteProjectElement extends BasePageElement {
+    @Getter
+    private static final By ROOT = By.cssSelector("[data-test='subproject']");
+    private static final By PROJECT_NAME = By.cssSelector("a [title]");
+    private SelenideElement projectName;
 
-    public ProjectElement(SelenideElement element, SelenideElement projectName, SelenideElement projectUrl,
-                          SelenideElement button) {
-        super(element);
-        this.projectName = projectName;
-        this.projectUrl = projectUrl;
-        this.button = button;
+    public FavoriteProjectElement(SelenideElement element) {
+        super(ROOT, element);
+        this.projectName = find(PROJECT_NAME);
     }
 }

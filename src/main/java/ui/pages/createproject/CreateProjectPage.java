@@ -1,4 +1,4 @@
-package ui.pages;
+package ui.pages.createproject;
 
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;

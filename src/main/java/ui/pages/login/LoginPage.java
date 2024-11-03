@@ -1,8 +1,9 @@
-package ui.pages;
+package ui.pages.login;
 
 import api.models.User;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
+import ui.pages.BasePage;
 import ui.pages.mainpanel.FavoriteProjectsPage;
 
 public class LoginPage extends BasePage {

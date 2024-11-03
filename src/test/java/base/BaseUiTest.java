@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeSuite;
 
 import java.util.Map;
 
+@SuppressWarnings("all")
 public class BaseUiTest extends BaseTest {
 
     @BeforeSuite(alwaysRun = true)

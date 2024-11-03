@@ -1,19 +1,24 @@
 package ui;
 
-import api.enums.Endpoint;
+import api.models.Projects;
+import api.requests.checked.CheckedRequests;
+import api.spec.Specifications;
 import base.BaseUiTest;
 import org.testng.annotations.Test;
-import ui.pages.CreateProjectPage;
-import ui.pages.LoginPage;
+import ui.pages.createproject.CreateProjectFromUrlPage;
+import ui.pages.createproject.CreateProjectPage;
+import ui.pages.login.LoginPage;
+import ui.pages.mainpanel.FavoriteProjectsPage;
 
-import static io.qameta.allure.Allure.step;
+import static api.enums.Endpoint.*;
 
 public class CreateProjectTest extends BaseUiTest {
     private static final String REPO_URL = "https://github.com/ichazov/TestRepo";
 
-    @Test(description = "user should be able to create project")
+    @Test(description = "user should be able to create project", invocationCount = 3)
     public void verifyUserCanCreateProject() {
-        superUserCheckedRequests.getRequest(Endpoint.USERS).create(testData.getUser());
+        testData.getUser().setRoles(projectAdminRoles);
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         LoginPage.open().login(testData.getUser());
         CreateProjectPage.open("_Root")
                 .createFromRepoUrl(REPO_URL)
@@ -21,21 +26,40 @@ public class CreateProjectTest extends BaseUiTest {
                         testData.getProject().getId(),
                         testData.getBuildType().getId()
                 );
-        System.out.println("stop");
-        step("");
-        step("");
+
+        softly.assertThat(FavoriteProjectsPage.open().getFavoriteProjects())
+                .withFailMessage("No project found")
+                .anyMatch(p -> p.getProjectName().getText().equals(testData.getProject().getId()));
     }
 
     @Test(description = "user should not be able to create project without name")
     public void verifyUserCannotCreateProjectWithoutName() {
-        step("login as user");
-        step("check number of projects");
-        step("open 'Create Project' page");
-        step("select 'Manually'");
-        step("submit project data: project id, description");
-        step("check number of projects has not changed");
+        String errorMsg = "Project name must not be empty";
+        CheckedRequests userCheckedRequest = new CheckedRequests(Specifications.authSpec(testData.getUser()));
 
-        step("verify error appears ");
+        testData.getUser().setRoles(projectAdminRoles);
+        superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
+        LoginPage.open().login(testData.getUser());
 
+        int projectsCount = userCheckedRequest
+                .<Projects>getRequest(PROJECTSS).read("").getProject().size();
+
+        CreateProjectPage.open("_Root")
+                .createFromRepoUrl(REPO_URL)
+                .setupProject(
+                        "",
+                        testData.getBuildType().getId()
+                );
+
+        int newProjectsCount = userCheckedRequest
+                .<Projects>getRequest(PROJECTSS).read("").getProject().size();
+
+        softly.assertThat(CreateProjectFromUrlPage.open().getErrors())
+                .withFailMessage(String.format("%s error message is not displayed", errorMsg))
+                .anyMatch(e -> e.getText().equals(errorMsg));
+
+        softly.assertThat(projectsCount)
+                .withFailMessage("Project count mismatch")
+                .isEqualTo(newProjectsCount);
     }
 }
