@@ -3,6 +3,7 @@ package ui.pages;
 import api.models.User;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
+import ui.pages.mainpanel.FavoriteProjectsPage;
 
 public class LoginPage extends BasePage {
     public static final String LOGIN_URL = "/login.html";
@@ -19,11 +20,11 @@ public class LoginPage extends BasePage {
         return Selenide.open(LOGIN_URL, LoginPage.class);
     }
 
-    public ProjectsPage login(User user) {
+    public FavoriteProjectsPage login(User user) {
         enterText(USERNAME_FIELD, user.getUsername());
         enterText(PASSWORD_FIELD, user.getPassword());
         clickElement(LOGIN_BUTTON);
-        return Selenide.page(ProjectsPage.class);
+        return Selenide.page(FavoriteProjectsPage.class);
     }
 }
 
