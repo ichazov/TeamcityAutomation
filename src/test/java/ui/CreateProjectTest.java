@@ -15,7 +15,7 @@ import static api.enums.Endpoint.*;
 public class CreateProjectTest extends BaseUiTest {
     private static final String REPO_URL = "https://github.com/ichazov/TestRepo";
 
-    @Test(description = "user should be able to create project", invocationCount = 3)
+    @Test(description = "user should be able to create project")
     public void verifyUserCanCreateProject() {
         testData.getUser().setRoles(projectAdminRoles);
         superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
