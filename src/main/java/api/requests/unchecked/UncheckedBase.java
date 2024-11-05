@@ -23,27 +23,27 @@ public class UncheckedBase extends Request implements CrudOperations {
     }
 
     @Override
-    public Response read(String id) {
+    public Response read(String parameter) {
         return RestAssured
                 .given()
                 .spec(spec)
-                .get(endpoint.getUrl() + "/" + id);
+                .get(endpoint.getUrl() + "/" + parameter);
     }
 
     @Override
-    public Response update(String id, BaseModel model) {
+    public Response update(String parameter, BaseModel model) {
         return RestAssured
                 .given()
                 .body(model)
                 .spec(spec)
-                .put(endpoint.getUrl() + "/" + id);
+                .put(endpoint.getUrl() + "/" + parameter);
     }
 
     @Override
-    public Response delete(String id) {
+    public Response delete(String parameter) {
         return RestAssured
                 .given()
                 .spec(spec)
-                .delete(endpoint.getUrl() + "/" + id);
+                .delete(endpoint.getUrl() + "/" + parameter);
     }
 }

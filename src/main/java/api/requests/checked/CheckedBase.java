@@ -30,26 +30,26 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
     }
 
     @Override
-    public T read(String id) {
+    public T read(String parameter) {
         return (T) uncheckedBase
-                .read(id)
+                .read(parameter)
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(endpoint.getModelClass());
     }
 
     @Override
-    public T update(String id, BaseModel model) {
+    public T update(String parameter, BaseModel model) {
         return (T) uncheckedBase
-                .update(id, model)
+                .update(parameter, model)
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(endpoint.getModelClass());
     }
 
     @Override
-    public Object delete(String id) {
+    public Object delete(String parameter) {
         return uncheckedBase
-                .delete(id)
-                .then().assertThat().statusCode(HttpStatus.SC_OK)
+                .delete(parameter)
+                .then().assertThat().statusCode(HttpStatus.SC_NO_CONTENT)
                 .extract().asString();
     }
 }

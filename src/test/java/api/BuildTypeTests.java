@@ -4,18 +4,16 @@ import api.models.*;
 import api.requests.checked.CheckedRequests;
 import api.requests.unchecked.UncheckedBase;
 import api.spec.Specifications;
+import base.BaseApiTest;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static api.enums.Endpoint.*;
-import static api.enums.UserRoles.*;
 import static api.generators.TestDataGenerator.generate;
 
-public class BuildTypeTests extends BaseTest {
-    Roles projectAdminRoles = generate(Roles.class, List.of(PROJECT_ADMIN.getRole()));
-
+public class BuildTypeTests extends BaseApiTest {
     @Test(description = "User should be able to create build type")
     public void verifyUserIsAbleToCreateBuildType() {
         CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
@@ -27,11 +25,9 @@ public class BuildTypeTests extends BaseTest {
                 .read(testData.getBuildType().getId())
                 .getName();
 
-        softly.assertEquals(
-                testData.getBuildType().getName(),
-                createdBuildTypeName,
-                "Incorrect build type name"
-        );
+        softly.assertThat(testData.getBuildType().getName())
+                .withFailMessage(() -> "Incorrect build type name")
+                .isEqualTo(createdBuildTypeName);
     }
 
     @Test(description = "User should not be able to create build type with existing id")
@@ -64,11 +60,9 @@ public class BuildTypeTests extends BaseTest {
                 .read(testData.getBuildType().getId())
                 .getName();
 
-        softly.assertEquals(
-                testData.getBuildType().getName(),
-                createdBuildTypeName,
-                "Incorrect build type name"
-        );
+        softly.assertThat(testData.getBuildType().getName())
+                .withFailMessage(() -> "Incorrect build type name")
+                .isEqualTo(createdBuildTypeName);
     }
 
     @Test(description = "Project admin should be able to create build type for another user's project")
@@ -86,9 +80,8 @@ public class BuildTypeTests extends BaseTest {
                 .read(testData.getBuildType().getId())
                 .getName();
 
-        softly.assertEquals(
-                testData.getBuildType().getName(),
-                createdBuildTypeName,
-                "Incorrect build type name");
+        softly.assertThat(testData.getBuildType().getName())
+                .withFailMessage(() -> "Incorrect build type name")
+                .isEqualTo(createdBuildTypeName);
     }
 }
