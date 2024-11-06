@@ -7,12 +7,12 @@ import org.openqa.selenium.By;
 @Getter
 public class FavoriteProjectElement extends BasePageElement {
     @Getter
-    private static final By ROOT = By.cssSelector("[data-test='subproject']");
+    private static final By FAVORITE_PROJECT_ITEM_ROOT = By.cssSelector("[data-test='subproject']");
     private static final By PROJECT_NAME = By.cssSelector("a [title]");
     private SelenideElement projectName;
 
     public FavoriteProjectElement(SelenideElement element) {
-        super(ROOT, element);
+        super(FAVORITE_PROJECT_ITEM_ROOT, element);
         this.projectName = find(PROJECT_NAME);
     }
 }

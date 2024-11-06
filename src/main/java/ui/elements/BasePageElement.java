@@ -8,19 +8,19 @@ import ui.Interactable;
 import static com.codeborne.selenide.Selenide.$;
 
 public abstract class BasePageElement implements Interactable {
-    private By rootElement;
+    private By elementLocator;
     private SelenideElement element;
 
     protected BasePageElement(By locator, SelenideElement element) {
-        this.rootElement = locator;
+        this.elementLocator = locator;
         this.element = element;
     }
 
     protected SelenideElement find(By locator) {
-        return getInteractableElement(rootElement, locator);
+        return getInteractableElement(elementLocator, locator);
     }
 
     protected ElementsCollection findAll(By locator) {
-        return $(rootElement).$$(locator);
+        return $(elementLocator).$$(locator);
     }
 }

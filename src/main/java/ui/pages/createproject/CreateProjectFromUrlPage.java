@@ -15,9 +15,11 @@ public class CreateProjectFromUrlPage extends BaseCreateProjectPage {
     }
 
     public BuildStepsPage setupProject(String projectId, String buildConfigurationName) {
+        //my fail after execution
         enterText(PROJECT_NAME_FIELD, projectId);
         enterText(BUILD_CONFIGURATION_NAME_FIELD, buildConfigurationName);
         clickElement(PROCEED_BUTTON);
+//add wait for page to load
         return Selenide.page(BuildStepsPage.class);
     }
 
