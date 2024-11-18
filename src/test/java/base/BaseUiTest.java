@@ -8,11 +8,14 @@ import org.testng.annotations.BeforeSuite;
 
 import java.util.Map;
 
+import static com.codeborne.selenide.Selenide.open;
+
 @SuppressWarnings("all")
 public class BaseUiTest extends BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     protected void setupUiTest() {
+        Configuration.timeout = 20000;
         Configuration.browser = Config.getProperty("browserFirefox");
         Configuration.baseUrl = "http://" + Config.getProperty("host");
         Configuration.remote = Config.getProperty("remote");
@@ -21,6 +24,7 @@ public class BaseUiTest extends BaseTest {
                 "enableVNC", true,
                 "enableLog", true
         ));
+        open();
     }
 
     @AfterMethod(alwaysRun = true)

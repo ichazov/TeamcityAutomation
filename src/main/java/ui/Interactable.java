@@ -9,12 +9,11 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.$;
 
 public interface Interactable {
-
     default SelenideElement getInteractableElement(By rootLocator, By locator) {
-        return $(rootLocator).$(locator).shouldBe(Condition.interactable, Duration.ofSeconds(15));
+        return $(rootLocator).$(locator).shouldBe(Condition.interactable, Duration.ofSeconds(20));
     }
 
     default SelenideElement getInteractableElement(By locator) {
-        return $(locator).shouldBe(Condition.interactable, Duration.ofSeconds(15));
+        return $(locator).shouldBe(Condition.interactable, Duration.ofSeconds(20));
     }
 }

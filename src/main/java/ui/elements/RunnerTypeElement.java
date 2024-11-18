@@ -9,11 +9,10 @@ public class RunnerTypeElement extends BasePageElement {
     @Getter
     private static final By RUNNER_ITEM_ROOT = By.className("SelectBuildRunners__listItem--r8");
     private static final By RUNNER_NAME = By.className("SelectBuildRunners__title--Vf");
-    private SelenideElement runnerName;
-//    private SelenideElement runnerItem;
+    private final SelenideElement runnerName;
 
     public RunnerTypeElement(SelenideElement element) {
-        super(RUNNER_ITEM_ROOT, element);
+        super(element);
         this.runnerName = find(RUNNER_NAME);
     }
 }

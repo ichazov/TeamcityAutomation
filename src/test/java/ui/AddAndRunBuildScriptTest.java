@@ -5,6 +5,7 @@ import api.requests.checked.CheckedRequests;
 import api.spec.Specifications;
 import base.BaseUiTest;
 import org.testng.annotations.Test;
+import ui.pages.build.NewBuildStepCommandLinePage;
 import ui.pages.build.NewBuildStepPage;
 import ui.pages.login.LoginPage;
 
@@ -22,12 +23,10 @@ public class AddAndRunBuildScriptTest extends BaseUiTest {
         userCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
         LoginPage.open().login(testData.getUser());
         NewBuildStepPage.open(testData.getBuildType().getId())
-                .selectRunnerByName(".net");
-        System.out.println("stop");
-        step("create build config");
-        step("open 'new build step' page");
-        step("get runner type elements");
-        step("select cmd");
+                .selectRunnerByName("command line");
+        NewBuildStepCommandLinePage.open().setupBuildStep("echo 'Hello, world!'");
+        System.out.println("");
+
         step("setup new cmd build step: 'id', 'custom script' and click 'save'");
         step("run build");
         step("verify results");
