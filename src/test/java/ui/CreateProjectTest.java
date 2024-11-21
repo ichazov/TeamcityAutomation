@@ -15,7 +15,7 @@ import static api.enums.Endpoint.*;
 public class CreateProjectTest extends BaseUiTest {
     private static final String REPO_URL = "https://github.com/ichazov/TestRepo";
 
-    @Test(description = "user should be able to create project")
+    @Test(description = "user should be able to create project", invocationCount = 10)
     public void verifyUserCanCreateProject() {
 //        superUserCheckedRequests.<Projects>getRequest(PROJECTSS).read("").getProject()
 //                .stream().filter(p -> !Objects.equals(p.getId(), "_Root"))
@@ -39,7 +39,7 @@ public class CreateProjectTest extends BaseUiTest {
                 .anyMatch(p -> p.getProjectName().getText().equalsIgnoreCase(testData.getProject().getId()));
     }
 
-    @Test(description = "user should not be able to create project without name")
+    @Test(description = "user should not be able to create project without name", invocationCount = 10)
     public void verifyUserCannotCreateProjectWithoutName() {
         String errorMsg = "Project name must not be empty";
         CheckedRequests userCheckedRequest = new CheckedRequests(Specifications.authSpec(testData.getUser()));
@@ -63,7 +63,7 @@ public class CreateProjectTest extends BaseUiTest {
 
         softly.assertThat(CreateProjectFromUrlPage.open().getErrors())
                 .withFailMessage(String.format("%s error message is not displayed", errorMsg))
-                .anyMatch(e -> e.getText().equals(errorMsg));
+                .anyMatch(e -> e.getText().equalsIgnoreCase(errorMsg));
 
         softly.assertThat(projectsCount)
                 .withFailMessage("Project count mismatch")

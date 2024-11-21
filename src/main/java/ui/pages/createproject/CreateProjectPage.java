@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 public class CreateProjectPage extends BaseCreateProjectPage {
     public static final String SHOW_MODE_PARAMETER = "createProjectMenu";
-    private static final By REPOSITORY_URL_FIELD = By.name("url");
+    private static final By REPOSITORY_URL_FIELD = By.id("url");
 
     public static CreateProjectPage open(String projectId) {
         return Selenide.open(

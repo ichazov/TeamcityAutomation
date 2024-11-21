@@ -27,7 +27,6 @@ public class AddAndRunBuildScriptTest extends BaseUiTest {
         NewBuildStepCommandLinePage.open().setupBuildStep("echo 'Hello, world!'");
         System.out.println("");
 
-        step("setup new cmd build step: 'id', 'custom script' and click 'save'");
         step("run build");
         step("verify results");
     }

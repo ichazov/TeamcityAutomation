@@ -5,6 +5,8 @@ import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import ui.pages.build.AutoDetectedBuildStepsPage;
 
+import static com.codeborne.selenide.Selenide.$$;
+
 public class CreateProjectFromUrlPage extends BaseCreateProjectPage {
     private static final By PROJECT_NAME_FIELD = By.id("projectName");
     private static final By BUILD_CONFIGURATION_NAME_FIELD = By.id("buildTypeName");
@@ -22,6 +24,7 @@ public class CreateProjectFromUrlPage extends BaseCreateProjectPage {
     }
 
     public ElementsCollection getErrors() {
-       return getInteractableElement(ERROR_LOCATOR).$$(ERROR_LOCATOR);
+        getInteractableElement(ERROR_LOCATOR);
+        return $$(ERROR_LOCATOR);
     }
 }

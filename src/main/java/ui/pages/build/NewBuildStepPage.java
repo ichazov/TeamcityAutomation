@@ -13,12 +13,7 @@ import static com.codeborne.selenide.Selenide.Wait;
 
 public class NewBuildStepPage extends BaseBuildPage {
     private static final String NEW_BUILD_STEP_MENU_URL = "/admin/editRunType.html?id=buildType:%s";
-    private static By runnerItem;
-
-    public NewBuildStepPage() {
-        super();
-        runnerItem = RunnerTypeElement.getRUNNER_ITEM_ROOT();
-    }
+    private static final By RUNNER_ITEM = RunnerTypeElement.getRUNNER_ITEM_ROOT();
 
     public static NewBuildStepPage open(String buildType) {
         var page = Selenide.open(
@@ -43,8 +38,8 @@ public class NewBuildStepPage extends BaseBuildPage {
     }
 
     private List<RunnerTypeElement> getRunnerTypes() {
-        getInteractableElement(ROOT, runnerItem);
-        return getPageElements($(ROOT).$$(runnerItem),
+        getInteractableElement(ROOT, RUNNER_ITEM);
+        return getPageElements($(ROOT).$$(RUNNER_ITEM),
                 RunnerTypeElement::new
         );
     }
