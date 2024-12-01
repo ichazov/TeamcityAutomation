@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class FavoriteProjectsPage extends BaseMainPanel {
     private static final String FAVORITE_PROJECTS_PAGE_URL = "/favorite/projects?mode=builds";
-    private static final By favoriteProjectItem = FavoriteProjectElement.getFAVORITE_PROJECT_ITEM_ROOT();
+    private static final By FAVORITE_PROJECT_ITEM = FavoriteProjectElement.getFAVORITE_PROJECT_ITEM_ROOT();
 
     public FavoriteProjectsPage() {
         super();
@@ -30,7 +30,7 @@ public class FavoriteProjectsPage extends BaseMainPanel {
     }
 
     public List<FavoriteProjectElement> getFavoriteProjects() {
-        getInteractableElement(ROOT, favoriteProjectItem);
-        return getPageElements($(ROOT).$$(favoriteProjectItem), FavoriteProjectElement::new);
+        getInteractableElement(ROOT, FAVORITE_PROJECT_ITEM);
+        return getPageElements($(ROOT).$$(FAVORITE_PROJECT_ITEM), FavoriteProjectElement::new);
     }
 }
