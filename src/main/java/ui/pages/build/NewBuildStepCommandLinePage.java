@@ -1,0 +1,23 @@
+package ui.pages.build;
+
+import api.generators.RandomData;
+import com.codeborne.selenide.Selenide;
+import org.openqa.selenium.By;
+
+public class NewBuildStepCommandLinePage extends BaseBuildPage {
+    private static final By NEW_RUNNER_ID_FIELD = By.id("newRunnerId");
+    private static final By SAVE_BUTTON = By.className("submitButton");
+
+    public static NewBuildStepCommandLinePage open() {
+        return Selenide.page(NewBuildStepCommandLinePage.class);
+    }
+
+    public void setupBuildStep(String script) {
+        enterText(NEW_RUNNER_ID_FIELD, RandomData.getString());
+        getInteractableElement(ROOT, By.className("CodeMirror"));
+        Selenide.executeJavaScript(
+                "document.querySelector('.CodeMirror').CodeMirror.setValue(arguments[0])", script
+        );
+        clickElement(SAVE_BUTTON);
+    }
+}
