@@ -1,6 +1,5 @@
 package ui.pages.build;
 
-import ui.components.BuildConfigPageHeaderComponent;
 import ui.pages.mainpanel.BaseMainPanel;
 
 public class BaseBuildConfigPage extends BaseMainPanel {

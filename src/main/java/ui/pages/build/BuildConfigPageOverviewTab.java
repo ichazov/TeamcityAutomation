@@ -3,7 +3,6 @@ package ui.pages.build;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.elements.BuildResultElement;
 
 import java.time.Duration;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.Wait;
 
 public class BuildConfigPageOverviewTab extends BaseBuildConfigPage {
     private static final By ROOT = By.className("OverviewTab__tabs--HS");

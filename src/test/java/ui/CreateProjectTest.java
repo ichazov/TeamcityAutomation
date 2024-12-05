@@ -10,6 +10,8 @@ import ui.pages.createproject.CreateProjectPage;
 import ui.pages.login.LoginPage;
 import ui.pages.mainpanel.FavoriteProjectsPage;
 
+import java.util.Objects;
+
 import static api.enums.Endpoint.*;
 
 public class CreateProjectTest extends BaseUiTest {

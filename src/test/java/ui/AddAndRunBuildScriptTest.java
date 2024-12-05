@@ -1,5 +1,6 @@
 package ui;
 
+import api.models.BuildType;
 import api.models.Project;
 import api.requests.checked.CheckedRequests;
 import api.spec.Specifications;
@@ -15,17 +16,18 @@ import ui.pages.login.LoginPage;
 import java.util.List;
 
 import static api.enums.Endpoint.*;
-import static io.qameta.allure.Allure.step;
 
 public class AddAndRunBuildScriptTest extends BaseUiTest {
-    @Test(description = "user should be able to add build script to build step and run it")
+    @Test(description = "user should be able to add build script to build step and run it", invocationCount = 10)
     public void verifyUserCanAddAndRunBuildScript() {
         CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
 
         testData.getUser().setRoles(projectAdminRoles);
+        testData.getBuildType().setSteps(null);
         superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
         userCheckedRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
-        userCheckedRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
+        userCheckedRequests.<BuildType>getRequest(BUILD_TYPES).create(testData.getBuildType());
+
         LoginPage.open()
                 .login(testData.getUser());
         NewBuildStepPage.open(testData.getBuildType().getId())
@@ -38,9 +40,8 @@ public class AddAndRunBuildScriptTest extends BaseUiTest {
                 "running"
         );
 
-        step("setup agent");
-
-        BuildConfigPageHeaderComponent.init().runBuild();
+        BuildConfigPageHeaderComponent.init()
+                .runBuild();
 
         String runningBuildId = runningBuildConfigPage.getBuildResults().get(0).getBuildResultNumber().getText();
         boolean hasRunningBuilds = runningBuildConfigPage.hasRunningBuilds();
