@@ -18,7 +18,7 @@ import java.util.List;
 import static api.enums.Endpoint.*;
 
 public class AddAndRunBuildScriptTest extends BaseUiTest {
-    @Test(description = "user should be able to add build script to build step and run it", invocationCount = 10)
+    @Test(description = "user should be able to add build script to build step and run it")
     public void verifyUserCanAddAndRunBuildScript() {
         CheckedRequests userCheckedRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
 

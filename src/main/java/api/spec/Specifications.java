@@ -24,7 +24,7 @@ public class Specifications {
     }
 
     public static RequestSpecification superUserSpec() {
-        String uri = String.format("http://%s:%s@%s", "", Config.getProperty("superUserToken"), Config.getProperty("host"));
+        String uri = String.format("http://%s:%s@%s", "", Config.getProperty("superUserToken"), HostManager.getHost());
         return requestSpecBuilder().setBaseUri(uri).build();
     }
 
@@ -33,7 +33,7 @@ public class Specifications {
     }
 
     public static RequestSpecification authSpec(User user) {
-        String uri = String.format("http://%s:%s@%s", user.getUsername(), user.getPassword(), Config.getProperty("host"));
+        String uri = String.format("http://%s:%s@%s", user.getUsername(), user.getPassword(), HostManager.getHost());
         return requestSpecBuilder().setBaseUri(uri).build();
     }
 }
