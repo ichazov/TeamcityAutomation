@@ -1,9 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.impl.Waiter;
 import org.openqa.selenium.By;
 import ui.Interactable;
 import ui.elements.BasePageElement;
