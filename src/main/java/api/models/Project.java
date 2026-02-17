@@ -1,6 +1,5 @@
 package api.models;
 
-import api.annotations.Random;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project extends BaseModel {
-    @Random
     private String id;
-    @Random
     private String name;
     private String locator;
 }
