@@ -2,7 +2,6 @@
 *.db
 *.log
 *.md
-CONTEXT.md
 *.xml
 *.class
 *.json
@@ -21,6 +20,7 @@ build/
 # Files:
 !pom.xml
 !config.properties
+!CONTEXT.md
 # Folders:
 !src/test/resources/*.xml
 !src/main/java/ui/pages/build
