@@ -2,6 +2,7 @@
 *.db
 *.log
 *.md
+CONTEXT.md
 *.xml
 *.class
 *.json

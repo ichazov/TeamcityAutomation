@@ -1,5 +1,6 @@
 package base;
 
+import api.factories.*;
 import api.generators.TestDataStorage;
 import api.models.Roles;
 import api.models.TestData;
@@ -11,20 +12,19 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static api.enums.UserRoles.PROJECT_ADMIN;
-import static api.generators.TestDataGenerator.generate;
+import static api.enums.UserRoles.*;
 
 @SuppressWarnings("all")
 public class BaseTest {
     protected SoftAssertions softly;
     protected CheckedRequests superUserCheckedRequests = new CheckedRequests(Specifications.superUserSpec());
     protected TestData testData;
-    protected Roles projectAdminRoles = generate(Roles.class, List.of(PROJECT_ADMIN.getRole()));
+    protected Roles projectAdminRoles = new RolesFactory().create(List.of(PROJECT_ADMIN.getRole()));
 
     @BeforeMethod(alwaysRun = true)
     protected void setUp() {
         softly = new SoftAssertions();
-        testData = generate();
+        testData = new TestDataFactory().create();
     }
 
     @AfterMethod(alwaysRun = true)
