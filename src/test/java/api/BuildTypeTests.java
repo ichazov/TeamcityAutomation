@@ -1,7 +1,5 @@
 package api;
 
-import api.factories.BuildTypeFactory;
-import api.factories.UserFactory;
 import api.models.*;
 import api.requests.checked.CheckedRequests;
 import api.requests.unchecked.UncheckedBase;
