@@ -29,7 +29,10 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     protected void tearDown() {
-        softly.assertAll();
-        TestDataStorage.getInstance().clearStorage();
+        try {
+            softly.assertAll();
+        } finally {
+            TestDataStorage.getInstance().clearStorage();
+        }
     }
 }
