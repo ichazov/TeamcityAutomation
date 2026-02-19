@@ -10,8 +10,8 @@ public class HostManager {
 
     static {
         if (isLocal()) {
-            HOST = Config.getProperty("local.host");
-        } else HOST = Config.getProperty("remote.host");
+            HOST = Config.getProperty("host.local");
+        } else HOST = Config.getProperty("host.remote");
     }
 
     public static String getHost() {
