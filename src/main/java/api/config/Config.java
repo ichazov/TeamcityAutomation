@@ -1,5 +1,6 @@
 package api.config;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -9,11 +10,13 @@ public class Config {
 
     private Config() {
         properties = new Properties();
-        try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE)) {
+            if (inputStream == null) {
+                throw new IllegalStateException("Missing config file: " + CONFIG_FILE);
+            }
             properties.load(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load config file: " + CONFIG_FILE, e);
         }
     }
 
@@ -26,6 +29,10 @@ public class Config {
     }
 
     public static String getProperty(String key) {
-        return getInstance().properties.getProperty(key);
+        String value = getInstance().properties.getProperty(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Missing required config key: " + key);
+        }
+        return value.trim();
     }
 }
