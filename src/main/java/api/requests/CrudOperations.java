@@ -2,9 +2,9 @@ package api.requests;
 
 import api.models.BaseModel;
 
-public interface CrudOperations {
-    Object create(BaseModel model);
-    Object read(String id);
-    Object update(String id, BaseModel model);
-    Object delete(String id);
+public interface CrudOperations<R, D> {
+    R create(BaseModel model);
+    R read(String id);
+    R update(String id, BaseModel model);
+    D delete(String id);
 }

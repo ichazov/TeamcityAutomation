@@ -10,7 +10,7 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
 @SuppressWarnings("unchecked")
-public final class CheckedBase<T extends BaseModel> extends Request implements CrudOperations {
+public final class CheckedBase<T extends BaseModel> extends Request implements CrudOperations<T, String> {
     private final UncheckedBase uncheckedBase;
 
     public CheckedBase(RequestSpecification spec, Endpoint endpoint) {
@@ -46,7 +46,7 @@ public final class CheckedBase<T extends BaseModel> extends Request implements C
     }
 
     @Override
-    public Object delete(String parameter) {
+    public String delete(String parameter) {
         return uncheckedBase
                 .delete(parameter)
                 .then().assertThat().statusCode(HttpStatus.SC_NO_CONTENT)

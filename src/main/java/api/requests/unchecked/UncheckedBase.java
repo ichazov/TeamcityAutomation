@@ -8,7 +8,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class UncheckedBase extends Request implements CrudOperations {
+public class UncheckedBase extends Request implements CrudOperations<Response, Response> {
     public UncheckedBase(RequestSpecification spec, Endpoint endpoint) {
         super(spec, endpoint);
     }
