@@ -29,7 +29,7 @@ public class BaseUiTest extends BaseTest {
 
     private void setupLocal() {
         Configuration.timeout = 20000;
-        Configuration.browser = Config.getProperty("browserFirefox");
+        Configuration.browser = Config.getProperty("browser.firefox");
         Configuration.baseUrl = "http://" + HostManager.getHost();
         open();
         getWebDriver().manage().window().maximize();
@@ -37,9 +37,9 @@ public class BaseUiTest extends BaseTest {
 
     private void setupRemote() {
         Configuration.timeout = 20000;
-        Configuration.browser = Config.getProperty("browserFirefox");
+        Configuration.browser = Config.getProperty("browser.firefox");
         Configuration.baseUrl = "http://" + HostManager.getHost();
-        Configuration.remote = Config.getProperty("selenoidRemote");
+        Configuration.remote = Config.getProperty("host.remote.selenoid");
 //        Configuration.browserSize = Config.getProperty("browserSize");
         Configuration.browserCapabilities.setCapability("selenoid:options", Map.of(
                 "enableVNC", true,
