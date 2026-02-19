@@ -19,11 +19,10 @@ public class HostManager {
     }
 
     public static boolean isLocal() {
-        String env = Config.getProperty("environment");
-        if (env.equalsIgnoreCase("local")) {
-            return true;
-        } else if (env.equalsIgnoreCase("remote")) {
-            return false;
-        } else throw new IllegalStateException("Unknown environment: " + env);
+        return switch (Config.getProperty("environment").toLowerCase()) {
+            case "local" -> true;
+            case "remote" -> false;
+            default -> throw new IllegalStateException("Unknown environment. Expected one of: local, remote");
+        };
     }
 }
