@@ -19,7 +19,7 @@ public class CreateProjectTest extends BaseUiTest {
 
     @Test(description = "user should be able to create project")
     public void verifyUserCanCreateProject() {
-//        superUserCheckedRequests.<Projects>getRequest(PROJECTSS).read("").getProject()
+//        superUserCheckedRequests.<Projects>getRequest(PROJECT_COLLECTION).read("").getProject()
 //                .stream().filter(p -> !Objects.equals(p.getId(), "_Root"))
 //                .forEach(p -> superUserCheckedRequests.getRequest(PROJECTS).delete("id:" + p.getId()));
 
@@ -51,7 +51,7 @@ public class CreateProjectTest extends BaseUiTest {
         LoginPage.open().login(testData.getUser());
 
         int projectsCount = userCheckedRequest
-                .<Projects>getRequest(PROJECTSS).read("").getProject().size();
+                .<Projects>getRequest(PROJECT_COLLECTION).read("").getProject().size();
 
         CreateProjectPage.open("_Root")
                 .createFromRepoUrl(REPO_URL)
@@ -61,7 +61,7 @@ public class CreateProjectTest extends BaseUiTest {
                 );
 
         int newProjectsCount = userCheckedRequest
-                .<Projects>getRequest(PROJECTSS).read("").getProject().size();
+                .<Projects>getRequest(PROJECT_COLLECTION).read("").getProject().size();
 
         softly.assertThat(CreateProjectFromUrlPage.open().getErrors())
                 .withFailMessage(String.format("%s error message is not displayed", errorMsg))
