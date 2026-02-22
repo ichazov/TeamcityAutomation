@@ -1,18 +1,17 @@
 package ui.pages.mainpanel;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.elements.FavoriteProjectElement;
 
-import java.time.Duration;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 
 public class FavoriteProjectsPage extends BaseMainPanel {
     private static final String FAVORITE_PROJECTS_PAGE_URL = "/favorite/projects?mode=builds";
-    private static final By FAVORITE_PROJECT_ITEM = FavoriteProjectElement.getFAVORITE_PROJECT_ITEM_ROOT();
+    private static final By FAVORITE_PROJECT_ITEM = By.cssSelector("[data-test='subproject']");
 
     public FavoriteProjectsPage() {
         super();
@@ -20,17 +19,12 @@ public class FavoriteProjectsPage extends BaseMainPanel {
 
     public static FavoriteProjectsPage open() {
         var page = Selenide.open(FAVORITE_PROJECTS_PAGE_URL, FavoriteProjectsPage.class);
-
-        Wait()
-                .withTimeout(Duration.ofSeconds(15))
-                .pollingEvery(Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(ROOT));
-
+        $(ROOT).shouldBe(Condition.visible);
         return page;
     }
 
     public List<FavoriteProjectElement> getFavoriteProjects() {
-        getInteractableElement(ROOT, FAVORITE_PROJECT_ITEM);
+        $(ROOT).$(FAVORITE_PROJECT_ITEM).shouldBe(Condition.visible);
         return getPageElements($(ROOT).$$(FAVORITE_PROJECT_ITEM), FavoriteProjectElement::new);
     }
 }
