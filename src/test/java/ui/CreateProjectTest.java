@@ -10,8 +10,6 @@ import ui.pages.createproject.CreateProjectPage;
 import ui.pages.login.LoginPage;
 import ui.pages.mainpanel.FavoriteProjectsPage;
 
-import java.util.Objects;
-
 import static api.enums.Endpoint.*;
 
 public class CreateProjectTest extends BaseUiTest {
@@ -30,15 +28,16 @@ public class CreateProjectTest extends BaseUiTest {
         boolean isProjectCreated = CreateProjectPage.open("_Root")
                 .createFromRepoUrl(REPO_URL)
                 .setupProject(
-                        testData.getProject().getId(),
+                        testData.getProject().getName(),
                         testData.getBuildType().getId()
                 ).isSuccessMessageDisplayed();
 
         softly.assertThat(isProjectCreated)
                  .isTrue();
         softly.assertThat(FavoriteProjectsPage.open().getFavoriteProjects())
-                .withFailMessage(String.format("Project %s not found", testData.getProject().getId()))
-                .anyMatch(p -> p.getProjectName().getText().equalsIgnoreCase(testData.getProject().getId()));
+                .withFailMessage(String.format("Project %s not found", testData.getProject().getName()))
+                .anyMatch(p ->
+                        p.getProjectName().equals(testData.getProject().getName()));
     }
 
     @Test(description = "user should not be able to create project without name")
