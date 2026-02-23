@@ -1,10 +1,12 @@
 package ui.pages.createproject;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import ui.pages.build.AutoDetectedBuildStepsPage;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CreateProjectFromUrlPage extends BaseCreateProjectPage {
@@ -24,7 +26,7 @@ public class CreateProjectFromUrlPage extends BaseCreateProjectPage {
     }
 
     public ElementsCollection getErrors() {
-        getInteractableElement(ERROR_LOCATOR);
+        $(ERROR_LOCATOR).shouldBe(Condition.visible);
         return $$(ERROR_LOCATOR);
     }
 }

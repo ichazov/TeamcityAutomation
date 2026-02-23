@@ -1,6 +1,7 @@
 package ui.pages.build;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import ui.elements.BuildResultElement;
@@ -28,14 +29,14 @@ public class BuildConfigPageOverviewTab extends BaseBuildConfigPage {
     }
 
     public boolean hasRunningBuilds() {
-        getInteractableElement(ROOT, BUILD_RESULT_ITEM);
+        $(ROOT).$(BUILD_RESULT_ITEM).shouldBe(Condition.interactable);
         return !getPageElements($(ROOT).$$(BUILD_RESULT_ITEM)
                 .shouldBe(CollectionCondition.empty, Duration.ofSeconds(30)), BuildResultElement::new)
                 .isEmpty();
     }
 
     public List<BuildResultElement> getBuildResults() {
-        getInteractableElement(ROOT, BUILD_RESULT_ITEM);
+        $(ROOT).$(BUILD_RESULT_ITEM).shouldBe(Condition.interactable);
         return getPageElements($(ROOT).$$(BUILD_RESULT_ITEM), BuildResultElement::new).stream()
                 .sorted(Comparator.comparing(buildResultElement -> buildResultElement.getBuildResultNumber().getText()))
                 .collect(Collectors.toList());

@@ -2,9 +2,8 @@ package ui.elements;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import ui.Interactable;
 
-public abstract class BasePageElement implements Interactable {
+public abstract class BasePageElement {
     private SelenideElement element;
 
     protected BasePageElement(SelenideElement element) {
