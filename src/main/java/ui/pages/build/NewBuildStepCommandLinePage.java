@@ -17,7 +17,7 @@ public class NewBuildStepCommandLinePage extends BaseBuildPage {
 
     public void setupBuildStep(String script) {
         enterText(NEW_RUNNER_ID_FIELD, RandomData.getString());
-        $(ROOT).$(By.className("CodeMirror")).shouldBe(Condition.interactable);
+        $(MAIN_CONTENT_ROOT).$(By.className("CodeMirror")).shouldBe(Condition.interactable);
         Selenide.executeJavaScript(
                 "document.querySelector('.CodeMirror').CodeMirror.setValue(arguments[0])", script
         );

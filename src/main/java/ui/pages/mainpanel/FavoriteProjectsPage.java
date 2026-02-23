@@ -19,12 +19,12 @@ public class FavoriteProjectsPage extends BaseMainPanel {
 
     public static FavoriteProjectsPage open() {
         var page = Selenide.open(FAVORITE_PROJECTS_PAGE_URL, FavoriteProjectsPage.class);
-        $(ROOT).shouldBe(Condition.visible);
+        $(MAIN_CONTENT_ROOT).shouldBe(Condition.visible);
         return page;
     }
 
     public List<FavoriteProjectElement> getFavoriteProjects() {
-        $(ROOT).$(FAVORITE_PROJECT_ITEM).shouldBe(Condition.visible);
-        return getPageElements($(ROOT).$$(FAVORITE_PROJECT_ITEM), FavoriteProjectElement::new);
+        $(MAIN_CONTENT_ROOT).$(FAVORITE_PROJECT_ITEM).shouldBe(Condition.visible);
+        return getPageElements($(MAIN_CONTENT_ROOT).$$(FAVORITE_PROJECT_ITEM), FavoriteProjectElement::new);
     }
 }

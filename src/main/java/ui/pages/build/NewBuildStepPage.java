@@ -15,12 +15,12 @@ public class NewBuildStepPage extends BaseBuildPage {
         var page = Selenide.open(
           String.format(NEW_BUILD_STEP_MENU_URL, buildType), NewBuildStepPage.class
         );
-        $(ROOT).shouldBe(Condition.visible);
+        $(MAIN_CONTENT_ROOT).shouldBe(Condition.visible);
         return page;
     }
 
     public void selectRunner(String runner) {
-        $(ROOT).$(String.format(RUNNER_ITEM, runner)).shouldBe(Condition.clickable)
+        $(MAIN_CONTENT_ROOT).$(String.format(RUNNER_ITEM, runner)).shouldBe(Condition.clickable)
                 .click(ClickOptions.usingJavaScript());
     }
 }
