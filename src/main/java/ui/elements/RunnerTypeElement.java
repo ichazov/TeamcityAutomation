@@ -7,12 +7,12 @@ import org.openqa.selenium.By;
 @Getter
 public class RunnerTypeElement extends BasePageElement {
     @Getter
-    private static final By RUNNER_ITEM_ROOT = By.className("SelectBuildRunners__listItem--r8");
+    private static final String RUNNER_ITEM_ROOT = "[data-test='runner-item %s']";
     private static final By RUNNER_NAME = By.className("SelectBuildRunners__title--Vf");
-    private final SelenideElement runnerName;
+    private final String runnerName;
 
     public RunnerTypeElement(SelenideElement element) {
         super(element);
-        this.runnerName = find(RUNNER_NAME);
+        this.runnerName = find(RUNNER_NAME).getText();
     }
 }

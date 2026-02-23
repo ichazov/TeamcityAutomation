@@ -31,7 +31,7 @@ public class AddAndRunBuildScriptTest extends BaseUiTest {
         LoginPage.open()
                 .login(testData.getUser());
         NewBuildStepPage.open(testData.getBuildType().getId())
-                .selectRunnerByName("command line");
+                .selectRunner("simpleRunner");
         NewBuildStepCommandLinePage.open()
                 .setupBuildStep("echo 'Hello, world!'");
 
