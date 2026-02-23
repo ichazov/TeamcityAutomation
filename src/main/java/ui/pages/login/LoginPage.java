@@ -8,7 +8,7 @@ import ui.pages.mainpanel.FavoriteProjectsPage;
 
 public class LoginPage extends BasePage {
     private static final String LOGIN_URL = "/login.html";
-    private static final By ROOT = By.id("loginForm");
+    private static final By ROOT = By.id("pageContent");
     private static final By USERNAME_FIELD = By.id("username");
     private static final By PASSWORD_FIELD = By.id("password");
     private static final By LOGIN_BUTTON = By.className("loginButton");
