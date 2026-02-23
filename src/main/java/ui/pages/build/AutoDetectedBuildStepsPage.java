@@ -14,6 +14,6 @@ public class AutoDetectedBuildStepsPage extends BaseBuildPage {
     }
 
     public boolean isSuccessMessageDisplayed() {
-       return $(ROOT).$(SUCCESS_MESSAGE).shouldBe(Condition.interactable).isDisplayed();
+       return $(MAIN_CONTENT_ROOT).$(SUCCESS_MESSAGE).shouldBe(Condition.interactable).isDisplayed();
     }
 }
