@@ -13,7 +13,12 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Selenide.$;
 
 public abstract class BasePage {
+    protected static final By MAIN_CONTENT_ROOT = By.tagName("main");
     private final By rootElement;
+
+    protected BasePage() {
+        this(MAIN_CONTENT_ROOT);
+    }
 
     protected BasePage(By locator) {
         this.rootElement = locator;
