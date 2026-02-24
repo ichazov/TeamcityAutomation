@@ -10,6 +10,8 @@ import ui.pages.createproject.CreateProjectPage;
 import ui.pages.login.LoginPage;
 import ui.pages.mainpanel.FavoriteProjectsPage;
 
+import java.util.Objects;
+
 import static api.enums.Endpoint.*;
 
 public class CreateProjectTest extends BaseUiTest {
@@ -17,9 +19,9 @@ public class CreateProjectTest extends BaseUiTest {
 
     @Test(description = "user should be able to create project")
     public void verifyUserCanCreateProject() {
-//        superUserCheckedRequests.<Projects>getRequest(PROJECT_COLLECTION).read("").getProject()
-//                .stream().filter(p -> !Objects.equals(p.getId(), "_Root"))
-//                .forEach(p -> superUserCheckedRequests.getRequest(PROJECTS).delete("id:" + p.getId()));
+        superUserCheckedRequests.<Projects>getRequest(PROJECT_COLLECTION).read("").getProject()
+                .stream().filter(p -> !Objects.equals(p.getId(), "_Root"))
+                .forEach(p -> superUserCheckedRequests.getRequest(PROJECTS).delete("id:" + p.getId()));
 
         testData.getUser().setRoles(projectAdminRoles);
         superUserCheckedRequests.getRequest(USERS).create(testData.getUser());
